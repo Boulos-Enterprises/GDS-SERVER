@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//General Route
+
+Route::get('/',function(){
+    return array("message"=>"Welcome to GDS SERVER API");
+});
+
+Route::resource('/roles',RoleController::class);
+
+Route::resource('/permission',PermissionController::class);
+
+
+
