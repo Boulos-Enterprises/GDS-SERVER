@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-class Roles extends Controller
+use App\Traits\HttpResponses;
+use Validator;
+
+class RolesController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +20,8 @@ class Roles extends Controller
     public function index()
     {
         //
+        $role = Role::all();
+        return $this->success($role,"Role Fetched");
     }
 
     /**
@@ -37,7 +43,16 @@ class Roles extends Controller
     public function store(Request $request)
     {
         //
-        $role = Role::create(['name' => 'writer']);
+        $validated = Validator::make($request->all(),[
+            'role_name'=>'required'
+        ]);
+
+        if($validated->fails()){
+            return response()->json($validated->messages());
+        }
+
+        $role = Role::create(['name' => $request->role_name]);
+        return $this->success($role,"Role Created");
     }
 
     /**

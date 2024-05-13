@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Traits\HttpResponses;
+use Validator;
 
 
 class PermissionController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +20,7 @@ class PermissionController extends Controller
     {
         //
         $all = Permission::all();
+        return $this->success($all,"Successful");
     }
 
     /**
@@ -27,6 +31,9 @@ class PermissionController extends Controller
     public function create()
     {
         //
+    
+        //$permission = Permission::create(['name' => 'edit articles']);
+
     }
 
     /**
@@ -38,7 +45,16 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         //
-        $permission = Permission::create(['name' => 'edit articles']);
+        $validated = Validator::make($request->all(),[
+            'permission_name'=>'required'
+        ]);
+
+        if($validated->fails()){
+            return response()->json($validated->messages());
+        }
+
+        $permission = Permission::create(['name' => $request->permission_name]);
+        return $this->success($permission,"Permission Created");
     }
 
     /**

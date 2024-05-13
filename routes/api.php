@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ Route::get('/',function(){
     return array("message"=>"Welcome to GDS SERVER API");
 });
 
-Route::resource('/roles',RoleController::class);
+Route::resource('/roles',RolesController::class);
 
 Route::resource('/permission',PermissionController::class);
 
