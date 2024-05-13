@@ -38,6 +38,26 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        
+        $validated = Validator($request->all(),[
+            'username'=>'required',
+            'password'=>'required',
+
+        ]);
+
+        if($validated->fails()){
+           
+            return response()->json($validated->messages());
+        }
+       
+        $user = User::create([
+           'username' =>  $request->username ,
+           'password'=>Hash::make($request->password),
+           'firstname'=>$request->firstname,
+           'lastname'=>$request->lastname,
+           'email'=>$request->email
+        ]);
+        $user->assignRole($request->role);
+        return $this->success($user,"Successfully Created");
+
     }
 }
