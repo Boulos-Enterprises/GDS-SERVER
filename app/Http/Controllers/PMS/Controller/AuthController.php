@@ -5,6 +5,7 @@ namespace App\Http\Controllers\PMS\Controller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Models\PMS\User;
 use Validator;
 use Hash;
 use Auth;
@@ -41,6 +42,7 @@ class AuthController extends Controller
         $validated = Validator($request->all(),[
             'username'=>'required',
             'password'=>'required',
+            'role'=>'required'
 
         ]);
 

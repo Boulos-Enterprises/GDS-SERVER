@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PMS\Controller\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ Route::get('/',function(){
 Route::resource('/roles',RolesController::class);
 
 Route::resource('/permission',PermissionController::class);
+
+Route::post('/create_superadmin',[AuthController::class,'register']);
+
+Route::post('/token/sanctum',[AuthController::class,'checklogin']);
 
 
 
