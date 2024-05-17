@@ -58,6 +58,7 @@ class AuthController extends Controller
            'lastname'=>$request->lastname,
            'email'=>$request->email
         ]);
+        
         $user->assignRole($request->role);
         return $this->success($user,"Successfully Created");
 

@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/',function(){
     return array("message"=>"Welcome to GDS SERVER API");
 });
-
+//PMS ENDPOINTS
 Route::resource('/roles',RolesController::class);
 
 Route::resource('/permission',PermissionController::class);
@@ -34,6 +34,9 @@ Route::resource('/permission',PermissionController::class);
 Route::post('/create_superadmin',[AuthController::class,'register']);
 
 Route::post('/token/sanctum',[AuthController::class,'checklogin']);
+
+
+//MMS END POINT
 
 
 
