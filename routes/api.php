@@ -8,6 +8,7 @@ use App\Http\Controllers\PMS\Controller\AuthController;
 use App\Http\Controllers\PrinterController;
 use App\Http\Controllers\RepairController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\MaintenanceController;
 
 
 
@@ -46,6 +47,7 @@ Route::post('/token/sanctum',[AuthController::class,'checklogin']);
 
 Route::resource('/printer',PrinterController::class);
 Route::resource('/repair',RepairController::class);
+Route::resource('/maintenance',MaintenanceController::class);
 
 
 

@@ -18,5 +18,6 @@ class Printer extends Model
         'printer_type_id',
         'printer_brand_id',
         'comment',
+        'serial_number',
     ];
 }

@@ -61,6 +61,7 @@ class PrinterController extends Controller
             'printer_type_id'=>'required',
             'printer_name'=>'required',
             'printer_brand_id'=>'required',
+            'serial_number'=>'required'
         ]);
 
         if($validated->fails()){
@@ -77,6 +78,7 @@ class PrinterController extends Controller
             'printer_type_id'=>$request->printer_type_id,
             'printer_user_id'=>$request->printer_user_id,
             'comment'=>$request->comment,
+            'serial_number'=>$request->serial_number
              
         ]);
 

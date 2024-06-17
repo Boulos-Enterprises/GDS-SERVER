@@ -21,8 +21,9 @@ class RepairController extends Controller
         //SELECT `repair`.`id` AS `repair_id`,`repair`.* ,`printer_map`.* FROM `repair` LEFT JOIN `printer_map` ON `printer_map`.`id` = `repair`.`printer_id` ORDER BY `repair`.`id` DESC
     //    $repair = Repair::all();
         $allRepair = DB::table('repair')
-        ->select('repair.id AS repair_id','repair.*','printer_map.*')
+        ->select('repair.id AS repair_id','repair.*','printer_map.*','printer_user.first_name','printer_user.last_name')
        ->join('printer_map','repair.printer_id','=','printer_map.id')
+       ->join('printer_user','printer_map.id','=','printer_user.id')
        ->orderBy('repair.id', 'DESC')
        ->get();
         return $this->success($allRepair,'Successful');
