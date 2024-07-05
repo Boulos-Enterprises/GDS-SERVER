@@ -9,4 +9,10 @@ class PrinterUser extends Model
 {
     use HasFactory;
     protected $table="printer_user";
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'department_id',
+        'company_id'
+    ];
 }

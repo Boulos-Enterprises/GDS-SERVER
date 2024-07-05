@@ -47,6 +47,19 @@ class GeneralController extends Controller
         $department = Department::where('company_id',$companyId)->get();
         return $this->success($department,'Successful');
     }
+    public function department(Request $request){
+        $department = Department::select('department.id AS department_id','department.*', 'company.*')
+                    ->join('company', 'department.company_id', '=', 'company.id')
+                    ->get();
+        return $this->success($department,'Successful');
+    }
+    public function PrinterUser(Request $request){
+        $user = PrinterUser::select('printer_user.id AS printer_user_id','department.*','company.*','printer_user.*')
+                ->join('department', 'department.id', '=', 'printer_user.department_id')
+                ->join('company', 'company.id', '=', 'printer_user.company_id')
+                ->get();
+        return $this->success($user,'Successful');
+    }
 
     public function getuserbydepartment($departmentId){
         $user = PrinterUser::where('department_id',$departmentId)->get();

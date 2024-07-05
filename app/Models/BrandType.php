@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Department extends Model
+class BrandType extends Model
 {
     use HasFactory;
-    protected $table="department";
+    protected $table = "printer_type";
     protected $fillable = [
-        'company_id',
-        'department_name'
+        'printer_type'
     ];
 }

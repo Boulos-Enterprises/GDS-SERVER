@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\Printer;
 use Illuminate\Http\Request;
-use App\Models\Maintenance;
-use App\Traits\HttpResponses;
 use Validator;
-use DB;
-class MaintenanceController extends Controller
+use App\Traits\HttpResponses;
+
+class CompanyController extends Controller
 {
     use HttpResponses;
     /**
@@ -18,15 +19,6 @@ class MaintenanceController extends Controller
     public function index()
     {
         //
-        $all = Maintenance::all();
-        $allMaintenance = DB::table('maintenance')
-        ->select('maintenance.id AS maintenance_id','maintenance.*','printer_map.*','printer_user.first_name','printer_user.last_name','maintenance_type.*')
-       ->join('printer_map','maintenance.printer_id','=','printer_map.id')
-       ->join('printer_user','printer_map.id','=','printer_user.id')
-       ->join('maintenance_type','maintenance.maintenance_type_id','=','maintenance_type.id')
-       ->orderBy('maintenance.id', 'DESC')
-       ->get();
-        return $this->success($allMaintenance,'Successful');
     }
 
     /**
@@ -49,17 +41,17 @@ class MaintenanceController extends Controller
     {
         //
         $validated = Validator($request->all(),[
-            'maintenance'=>'required',
-            'maintenance_type_id'=>'required',
-            'printer_id'=>'required',
-            
+            'company_name'=>'required',    
         ]);
         if($validated->fails()){
            
             return response()->json($validated->messages());
         }
-        $Maintenance = Maintenance::create($request->all());
-        return $this->success($Maintenance,'Successful');
+
+        $createCompany = Company::create([
+            'company_name'=>$request->company_name
+        ]);
+        return $this->success([$createCompany]);
 
 
     }
@@ -73,6 +65,7 @@ class MaintenanceController extends Controller
     public function show($id)
     {
         //
+       
     }
 
     /**
@@ -96,11 +89,10 @@ class MaintenanceController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $maintenance = Maintenance::findOrfail($id);
-        $maintenance->update($request->all());
+        $company = Company::findOrFail($id);
+        $company->update($request->all());
 
-        return $this->success($maintenance,'Successful');
-
+        return $this->success($company,'Successful');
     }
 
     /**
@@ -112,8 +104,16 @@ class MaintenanceController extends Controller
     public function destroy($id)
     {
         //
-        $maintenance = Maintenance::findOrFail($id);
-        $maintenance->delete();
-        return $this->success($maintenance,'Successful');
+        $check = Printer::where('company_id',$id)->first();
+        if($check){
+            return $this->error('You cannot Delete');
+        }
+        else{
+            $company = Company::findOrFail($id);
+            $company->delete();
+            return $this->success($company,'Successful');
+        }
+        
+
     }
 }

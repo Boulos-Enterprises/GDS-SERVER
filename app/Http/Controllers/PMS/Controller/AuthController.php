@@ -50,6 +50,16 @@ class AuthController extends Controller
 
     }
 
+    public function getMenu(Request $request){
+
+        $menu = $this->menuItems($request->userid);
+
+    
+        return $this->success([
+            "menuitems"=>$menu,
+        ]);
+    }
+
     public function menuItems($userId){
 
         $menuItems = DB::table('menuitem')

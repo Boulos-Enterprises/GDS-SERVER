@@ -122,13 +122,30 @@ class PrinterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
-        $update = Printer::findOrfail($id);
-      
-    
-        return $this->success($request->input('printer_name'),'Successful');
+        
+        
+        // $update = Printer::findOrfail($id);
+        // $data = $request->all();
+    // Access individual properties
+        // $printerId = $data['printer_id'];
+        // $issue = json_decode($data['issue'], true);
+        // $amount = json_decode($data['amount'], true);
+        // $repair = json_decode($data['repair'], true);
+        // $id = $data['id'];
+        
+        return $this->success($request->input(),'Successful');
+    }
+
+    public function updatePrinter(Request $request,$id){
+        $printer = Printer::findOrfail($id);
+
+        $printer->update($request->all());
+        return $this->success($printer,'Successful');
+        // return response()->json(['message' => 'Update successful', 'data' => $printer], 200);
+
+       // return $this->success($update,'Successful');
     }
 
     /**
@@ -140,5 +157,9 @@ class PrinterController extends Controller
     public function destroy($id)
     {
         //
+        $printer = Printer::findOrFail($id);
+        $printer->delete();
+        return $this->success($printer,'Successful');
+        
     }
 }
