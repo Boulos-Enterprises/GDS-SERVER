@@ -66,4 +66,8 @@ class GeneralController extends Controller
         return $this->success($user,'Successful');
     }
 
+    public function checkToken(Request $request){
+        return $this->success('Token Verified','Successful');
+    }
+
 }

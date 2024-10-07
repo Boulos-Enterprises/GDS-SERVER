@@ -22,7 +22,7 @@ class MaintenanceController extends Controller
         $allMaintenance = DB::table('maintenance')
         ->select('maintenance.id AS maintenance_id','maintenance.*','printer_map.*','printer_user.first_name','printer_user.last_name','maintenance_type.*')
        ->join('printer_map','maintenance.printer_id','=','printer_map.id')
-       ->join('printer_user','printer_map.id','=','printer_user.id')
+       ->join('printer_user','printer_map.printer_user_id','=','printer_user.id')
        ->join('maintenance_type','maintenance.maintenance_type_id','=','maintenance_type.id')
        ->orderBy('maintenance.id', 'DESC')
        ->get();
